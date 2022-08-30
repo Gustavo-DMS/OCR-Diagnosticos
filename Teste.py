@@ -1,4 +1,3 @@
-from pydoc import apropos
 import cv2 as cv
 
 image = cv.imread(cv.samples.findFile(r'D:\Desktop\OCR teste\OCR-Diagnosticos\fotos_display\Termometro_digital_1.png'))
@@ -18,7 +17,8 @@ screenCnt = None
 # iterate over contours and find which satisfy some conditions
 for c in contorno:
     peri = cv.arcLength(c, True)
-    approx = cv.approxPolyDP(c,0.02*peri, True) # you could tune value of 0.02
+    approx = cv.approxPolyDP(c,0.02*peri, True) # para imagem 1
+    # approx = cv.approxPolyDP(c,0.05*peri, True) # para imagem 2
     x, y, w, h = cv.boundingRect(approx)
     if h >= 15 and len(approx) == 4:
         screenCnt = approx
