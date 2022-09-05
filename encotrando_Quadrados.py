@@ -18,8 +18,8 @@ cnts = cv2.findContours(close, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
 min_area = 100
-max_area = 1500
-image_number = 0
+max_area = 150000
+image_number = 1
 for c in cnts:
     area = cv2.contourArea(c)
     if area > min_area and area < max_area:
