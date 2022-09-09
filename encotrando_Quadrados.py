@@ -1,35 +1,49 @@
-import cv2
+import cv2 as cv
+import  os
+from matplotlib import pyplot as plt
 import numpy as np
 
-# Load image, grayscale, median blur, sharpen image
-image = cv2.imread(r'D:\Desktop\OCR teste\OCR-Diagnosticos\fotos_display\Termometro_digital_2.png')
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-blur = cv2.medianBlur(gray, 5)
-sharpen_kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-sharpen = cv2.filter2D(blur, -1, sharpen_kernel)
 
-# Threshold and morph close
-thresh = cv2.threshold(sharpen, 160, 255, cv2.THRESH_BINARY_INV)[1]
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
-close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel, iterations=2)
+directory = r".\fotos_display"
 
-# Find contours and filter using threshold area
-cnts = cv2.findContours(close, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
-min_area = 100
-max_area = 150000
-image_number = 1
-for c in cnts:
-    area = cv2.contourArea(c)
-    if area > min_area and area < max_area:
-        x,y,w,h = cv2.boundingRect(c)
-        ROI = image[y:y+h, x:x+w]
-        cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
-        image_number += 1
+x = 0
+y = 0
+for filename in os.listdir(directory):
+    fig, ax = plt.subplots(2, 2, figsize=(8,8))
+    img = cv.imread(fr'.\fotos_display\{filename}')
+    # Load img, grayscale, median blur, sharpen img
 
-cv2.imshow('sharpen', sharpen)
-cv2.imshow('close', close)
-cv2.imshow('thresh', thresh)
-cv2.imshow('image', image)
-cv2.waitKey()
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    blur = cv.medianBlur(gray, 5)
+    sharpen_kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+    sharpen = cv.filter2D(blur, -1, sharpen_kernel)
+
+    # Threshold and morph close
+    thresh = cv.threshold(sharpen, 160, 255, cv.THRESH_BINARY_INV)[1]
+    kernel = cv.getStructuringElement(cv.MORPH_RECT, (3,3))
+    close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel, iterations=2)
+
+    # Find contours and filter using threshold area
+    cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+
+    min_area = 100
+    max_area = 150000
+    img_number = 1
+    for c in cnts:
+        area = cv.contourArea(c)
+        if area > min_area and area < max_area:
+            x,y,w,h = cv.boundingRect(c)
+            ROI = img[y:y+h, x:x+w]
+            cv.rectangle(img, (x, y), (x + w, y + h), (36,255,12), 2)
+            img_number += 1
+
+
+
+    ax[0,0].imshow(img,'gray')
+    ax[0,1].imshow(sharpen,'gray')
+    ax[1,0].imshow(thresh,'gray')
+    ax[1,1].imshow(close,'gray')
+
+plt.show()
