@@ -17,7 +17,7 @@ for filename in os.listdir(directory):
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     blur = cv.medianBlur(gray, 5)
     sharpen_kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-    sharpen = cv.filter2D(blur, -1, sharpen_kernel)
+    sharpen = cv.filter2D(gray, -1, sharpen_kernel)
 
     # Threshold and morph close
     thresh = cv.threshold(sharpen, 160, 255, cv.THRESH_BINARY_INV)[1]
@@ -25,7 +25,7 @@ for filename in os.listdir(directory):
     close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel, iterations=2)
 
     # Find contours and filter using threshold area
-    cnts = cv.findContours(close, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnts = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
     min_area = 100

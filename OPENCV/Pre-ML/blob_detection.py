@@ -5,7 +5,7 @@ import os
 from matplotlib import pyplot as plt
 
 
-directory = r".\fotos_display"
+directory = r".\fotos_crop"
 
 
 fig, ax = plt.subplots(2, 2, figsize=(8,8))
@@ -13,7 +13,7 @@ x = 0
 y = 0
 for filename in os.listdir(directory):
     # Read img
-    img = cv.imread(fr'.\fotos_display\{filename}')
+    img = cv.imread(fr'.\{directory}\{filename}')
 
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     gray = cv.bilateralFilter(gray, 11, 17, 17)

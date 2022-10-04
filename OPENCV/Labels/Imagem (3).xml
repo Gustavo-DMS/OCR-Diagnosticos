@@ -1,0 +1,26 @@
+<annotation>
+	<folder>fotos_display</folder>
+	<filename>Imagem (3).jpeg</filename>
+	<path>D:\Desktop\OCR teste\OCR-Diagnosticos\OPENCV\fotos_display\Imagem (3).jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>720</width>
+		<height>1280</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>display</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>142</xmin>
+			<ymin>209</ymin>
+			<xmax>583</xmax>
+			<ymax>813</ymax>
+		</bndbox>
+	</object>
+</annotation>
