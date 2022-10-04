@@ -1,0 +1,6 @@
+train: D:\Desktop\OCR teste\OCR-Diagnosticos\YOLOv5\yolov5\training\train
+val: D:\Desktop\OCR teste\OCR-Diagnosticos\YOLOv5\yolov5\training\valid
+test: D:\Desktop\OCR teste\OCR-Diagnosticos\YOLOv5\yolov5\training\test
+
+nc: 1
+names: ['Displays']
